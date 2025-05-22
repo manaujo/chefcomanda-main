@@ -9,7 +9,7 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {/* Modern Chef Illustration */}
           <img
             src={Img}
-            alt="Prêmios de rifa"
+            alt="ChefComanda Logo"
             className="rounded-lg shadow-xl max-w-full h-auto"
             style={{ maxHeight: "300px" }}
           />
