@@ -1,49 +1,127 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, Outlet } from "react-router-dom";
 import {
-  Menu, ChefHat, LayoutDashboard, Users, ShoppingBag,
-  ClipboardList, PieChart, Settings, Coffee, QrCode,
-  CreditCard, Moon, Sun, Globe, PenSquare, Calculator,
+  Menu,
+  ChefHat,
+  LayoutDashboard,
+  Users,
+  ShoppingBag,
+  ClipboardList,
+  PieChart,
+  Settings,
+  Coffee,
+  QrCode,
+  CreditCard,
+  Moon,
+  Sun,
+  Globe,
+  PenSquare,
+  Calculator,
   HelpCircle
-} from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
-import ProfileDropdown from '../components/profile/ProfileDropdown';
-import NotificationDropdown from '../components/NotificationDropdown';
+} from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from "../contexts/ThemeContext";
+import ProfileDropdown from "../components/profile/ProfileDropdown";
+import NotificationDropdown from "../components/NotificationDropdown";
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarHover, setSidebarHover] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
-  const isPDV = location.pathname === '/pdv';
-  const isComandas = location.pathname === '/comandas';
+  const isPDV = location.pathname === "/dashboard/pdv";
+  const isComandas = location.pathname === "/dashboard/comandas";
 
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={20} />, roles: ['admin', 'cashier'] },
-    { name: 'Mesas', path: '/mesas', icon: <Coffee size={20} />, roles: ['admin', 'waiter'] },
-    { name: 'Comandas', path: '/comandas', icon: <ClipboardList size={20} />, roles: ['admin', 'kitchen', 'waiter'] },
-    { name: 'PDV', path: '/pdv', icon: <CreditCard size={20} />, roles: ['admin', 'cashier'] },
-    { name: 'Cardápio', path: '/cardapio', icon: <ShoppingBag size={20} />, roles: ['admin', 'stock'] },
-    { name: 'Estoque', path: '/estoque', icon: <ShoppingBag size={20} />, roles: ['admin', 'stock'] },
-    { name: 'Pedidos iFood', path: '/ifood', icon: <ShoppingBag size={20} />, roles: ['admin', 'kitchen'] },
-    { name: 'Relatórios', path: '/relatorios', icon: <PieChart size={20} />, roles: ['admin', 'cashier'] },
-    { name: 'CMV', path: '/cmv', icon: <Calculator size={20} />, roles: ['admin'] },
-    { name: 'Cardápio Online', path: '/cardapio-online', icon: <QrCode size={20} />, roles: ['admin'] },
-    { name: 'Editor de Cardápio', path: '/cardapio-online/editor', icon: <PenSquare size={20} />, roles: ['admin'] },
-    { name: 'Cardápio Online (Público)', path: '/cardapio/1', icon: <Globe size={20} />, roles: ['admin'] },
-    { name: 'Central de Ajuda', path: '/ajuda', icon: <HelpCircle size={20} />, roles: ['admin', 'kitchen', 'waiter', 'cashier'] },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <LayoutDashboard size={20} />,
+      roles: ["admin", "cashier"]
+    },
+    {
+      name: "Mesas",
+      path: "/dashboard/mesas",
+      icon: <Coffee size={20} />,
+      roles: ["admin", "waiter"]
+    },
+    {
+      name: "Comandas",
+      path: "/dashboard/comandas",
+      icon: <ClipboardList size={20} />,
+      roles: ["admin", "kitchen", "waiter"]
+    },
+    {
+      name: "PDV",
+      path: "/dashboard/pdv",
+      icon: <CreditCard size={20} />,
+      roles: ["admin", "cashier"]
+    },
+    {
+      name: "Cardápio",
+      path: "/dashboard/cardapio",
+      icon: <ShoppingBag size={20} />,
+      roles: ["admin", "stock"]
+    },
+    {
+      name: "Estoque",
+      path: "/dashboard/estoque",
+      icon: <ShoppingBag size={20} />,
+      roles: ["admin", "stock"]
+    },
+    {
+      name: "Pedidos iFood",
+      path: "/dashboard/ifood",
+      icon: <ShoppingBag size={20} />,
+      roles: ["admin", "kitchen"]
+    },
+    {
+      name: "Relatórios",
+      path: "/dashboard/relatorios",
+      icon: <PieChart size={20} />,
+      roles: ["admin", "cashier"]
+    },
+    {
+      name: "CMV",
+      path: "/dashboard/cmv",
+      icon: <Calculator size={20} />,
+      roles: ["admin"]
+    },
+    {
+      name: "Cardápio Online",
+      path: "/dashboard/cardapio-online",
+      icon: <QrCode size={20} />,
+      roles: ["admin"]
+    },
+    {
+      name: "Editor de Cardápio",
+      path: "/dashboard/cardapio-online/editor",
+      icon: <PenSquare size={20} />,
+      roles: ["admin"]
+    },
+    {
+      name: "Cardápio Online (Público)",
+      path: "/cardapio/1",
+      icon: <Globe size={20} />,
+      roles: ["admin"]
+    },
+    {
+      name: "Central de Ajuda",
+      path: "/dashboard/ajuda",
+      icon: <HelpCircle size={20} />,
+      roles: ["admin", "kitchen", "waiter", "cashier"]
+    }
   ];
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setSidebarOpen(false);
       }
     };
 
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
   if (isPDV || isComandas) {
@@ -71,7 +149,7 @@ const DashboardLayout: React.FC = () => {
                 className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
                 title="Alternar tema"
               >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
               </button>
 
               <NotificationDropdown />
@@ -95,8 +173,8 @@ const DashboardLayout: React.FC = () => {
                       to={item.path}
                       className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
                         location.pathname === item.path
-                          ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400'
-                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                          ? "bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                       }`}
                       onClick={() => setSidebarOpen(false)}
                     >
@@ -145,7 +223,7 @@ const DashboardLayout: React.FC = () => {
               className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
               title="Alternar tema"
             >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
             <NotificationDropdown />
@@ -156,7 +234,7 @@ const DashboardLayout: React.FC = () => {
 
       <aside
         className={`fixed left-0 top-16 bottom-0 z-40 w-64 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out ${
-          sidebarOpen || sidebarHover ? 'translate-x-0' : '-translate-x-full'
+          sidebarOpen || sidebarHover ? "translate-x-0" : "-translate-x-full"
         }`}
         onMouseEnter={() => setSidebarHover(true)}
         onMouseLeave={() => setSidebarHover(false)}
@@ -169,8 +247,8 @@ const DashboardLayout: React.FC = () => {
                 to={item.path}
                 className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
                   location.pathname === item.path
-                    ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? "bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 }`}
                 onClick={() => setSidebarOpen(false)}
               >

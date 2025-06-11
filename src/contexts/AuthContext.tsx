@@ -248,7 +248,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       toast.success("Logout realizado com sucesso!");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error signing out:", error);
 
@@ -267,8 +267,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         );
       }
 
-      // Always navigate to login regardless of server-side logout success
-      navigate("/login");
+      // Always navigate to landing page regardless of server-side logout success
+      navigate("/");
     }
   };
 
