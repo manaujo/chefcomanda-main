@@ -7,15 +7,8 @@ import toast from 'react-hot-toast';
 type Tables = Database['public']['Tables'];
 type Mesa = Tables['mesas']['Row'];
 type Produto = Tables['produtos']['Row'];
-type Comanda = Tables['comandas']['Row'] & {
-  mesa?: Tables['mesas']['Row'];
-  itens?: (Tables['itens_comanda']['Row'] & {
-    produto?: Tables['produtos']['Row'];
-  })[];
-};
-type ItemComanda = Tables['itens_comanda']['Row'] & {
-  produto?: Tables['produtos']['Row'];
-};
+type Comanda = Tables['comandas']['Row'];
+type ItemComanda = Tables['itens_comanda']['Row'];
 
 interface RestauranteContextData {
   restaurante: Tables['restaurantes']['Row'] | null;
@@ -47,7 +40,6 @@ interface RestauranteContextData {
   atualizarStatusItem: (itemId: string, status: ItemComanda['status']) => Promise<void>;
   removerItemComanda: (itemId: string) => Promise<void>;
   finalizarComanda: (comandaId: string, formaPagamento: string) => Promise<void>;
-  finalizarPagamento: (mesaId: string, formaPagamento: string) => Promise<void>;
   
   // Data refresh
   refreshData: () => Promise<void>;
@@ -117,7 +109,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setMesas(data || []);
     } catch (error) {
       console.error('Error loading mesas:', error);
-      toast.error('Erro ao carregar mesas');
     }
   };
 
@@ -127,7 +118,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setProdutos(data || []);
     } catch (error) {
       console.error('Error loading produtos:', error);
-      toast.error('Erro ao carregar produtos');
     }
   };
 
@@ -146,7 +136,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setItensComanda(allItems);
     } catch (error) {
       console.error('Error loading comandas:', error);
-      toast.error('Erro ao carregar comandas');
     }
   };
 
@@ -177,7 +166,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error adding mesa:', error);
       toast.error('Erro ao adicionar mesa');
-      throw error;
     }
   };
 
@@ -195,7 +183,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error occupying mesa:', error);
       toast.error('Erro ao ocupar mesa');
-      throw error;
     }
   };
 
@@ -215,7 +202,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error freeing mesa:', error);
       toast.error('Erro ao liberar mesa');
-      throw error;
     }
   };
 
@@ -230,7 +216,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error deleting mesa:', error);
       toast.error('Erro ao excluir mesa');
-      throw error;
     }
   };
 
@@ -249,7 +234,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error adding produto:', error);
       toast.error('Erro ao adicionar produto');
-      throw error;
     }
   };
 
@@ -264,7 +248,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error updating produto:', error);
       toast.error('Erro ao atualizar produto');
-      throw error;
     }
   };
 
@@ -279,7 +262,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error deleting produto:', error);
       toast.error('Erro ao excluir produto');
-      throw error;
     }
   };
 
@@ -329,7 +311,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error adding item to comanda:', error);
       toast.error('Erro ao adicionar item à comanda');
-      throw error;
     }
   };
 
@@ -344,7 +325,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error updating item status:', error);
       toast.error('Erro ao atualizar status do item');
-      throw error;
     }
   };
 
@@ -359,7 +339,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error removing item from comanda:', error);
       toast.error('Erro ao remover item da comanda');
-      throw error;
     }
   };
 
@@ -397,29 +376,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } catch (error) {
       console.error('Error finalizing comanda:', error);
       toast.error('Erro ao finalizar comanda');
-      throw error;
-    }
-  };
-
-  const finalizarPagamento = async (mesaId: string, formaPagamento: string) => {
-    if (!restaurante || !user) return;
-    
-    try {
-      // Find open comanda for this mesa
-      const comanda = comandas.find(c => c.mesa_id === mesaId && c.status === 'aberta');
-      if (!comanda) {
-        throw new Error('Nenhuma comanda aberta encontrada para esta mesa');
-      }
-
-      // Finalize the comanda
-      await finalizarComanda(comanda.id, formaPagamento);
-
-      // Free the mesa
-      await liberarMesa(mesaId);
-    } catch (error) {
-      console.error('Error finalizing payment:', error);
-      toast.error('Erro ao finalizar pagamento');
-      throw error;
     }
   };
 
@@ -443,7 +399,6 @@ export const RestauranteProvider: React.FC<{ children: React.ReactNode }> = ({ c
       atualizarStatusItem,
       removerItemComanda,
       finalizarComanda,
-      finalizarPagamento,
       refreshData
     }}>
       {children}

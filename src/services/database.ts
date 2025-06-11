@@ -94,17 +94,31 @@ export class DatabaseService {
 
   // Comandas
   static async getComandas(restauranteId: string) {
+    // First get mesas for this restaurant
+    const { data: mesas, error: mesasError } = await supabase
+      .from('mesas')
+      .select('id')
+      .eq('restaurante_id', restauranteId);
+
+    if (mesasError) throw mesasError;
+    
+    if (!mesas || mesas.length === 0) {
+      return [];
+    }
+
+    const mesaIds = mesas.map(mesa => mesa.id);
+
     const { data, error } = await supabase
       .from('comandas')
       .select(`
         *,
-        mesa:mesas!inner(*),
+        mesa:mesas(*),
         itens:itens_comanda(
           *,
           produto:produtos(*)
         )
       `)
-      .eq('mesa.restaurante_id', restauranteId)
+      .in('mesa_id', mesaIds)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -308,54 +322,6 @@ export class DatabaseService {
   static async updateRestaurante(id: string, updates: Partial<Tables['restaurantes']['Update']>) {
     const { data, error } = await supabase
       .from('restaurantes')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
-    return data;
-  }
-
-  // Dashboard Stats
-  static async getDashboardStats(userId: string) {
-    const { data, error } = await supabase
-      .from('dashboard_stats')
-      .select('*')
-      .eq('user_id', userId)
-      .single();
-
-    if (error) throw error;
-    return data;
-  }
-
-  // Insumos (Inventory)
-  static async getInsumos(restauranteId: string) {
-    const { data, error } = await supabase
-      .from('insumos')
-      .select('*')
-      .eq('restaurante_id', restauranteId)
-      .eq('ativo', true)
-      .order('nome');
-
-    if (error) throw error;
-    return data;
-  }
-
-  static async createInsumo(insumo: Omit<Tables['insumos']['Insert'], 'id' | 'created_at' | 'updated_at'>) {
-    const { data, error } = await supabase
-      .from('insumos')
-      .insert(insumo)
-      .select()
-      .single();
-
-    if (error) throw error;
-    return data;
-  }
-
-  static async updateInsumo(id: string, updates: Partial<Tables['insumos']['Update']>) {
-    const { data, error } = await supabase
-      .from('insumos')
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq('id', id)
       .select()

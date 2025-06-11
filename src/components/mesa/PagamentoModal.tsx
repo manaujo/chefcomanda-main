@@ -4,9 +4,6 @@ import Button from '../ui/Button';
 import { useRestaurante } from '../../contexts/RestauranteContext';
 import { formatarDinheiro } from '../../utils/formatters';
 import toast from 'react-hot-toast';
-import { Database } from '../../types/database';
-
-type Mesa = Database['public']['Tables']['mesas']['Row'];
 
 interface PagamentoModalProps {
   isOpen: boolean;
@@ -26,18 +23,18 @@ const PagamentoModal: React.FC<PagamentoModalProps> = ({ isOpen, onClose, mesa }
   
   const { finalizarPagamento } = useRestaurante();
 
-  const valorTaxaServico = taxaServico ? mesa.valor_total * 0.1 : 0;
+  const valorTaxaServico = taxaServico ? mesa.valorTotal * 0.1 : 0;
   const valorCouvert = couvertArtistico ? 15 * (mesa.capacidade || 1) : 0;
   
   const calcularDesconto = () => {
     if (desconto.tipo === 'percentual') {
-      return (mesa.valor_total + valorTaxaServico + valorCouvert) * (desconto.valor / 100);
+      return (mesa.valorTotal + valorTaxaServico + valorCouvert) * (desconto.valor / 100);
     }
     return desconto.valor;
   };
 
   const valorDesconto = calcularDesconto();
-  const valorTotal = mesa.valor_total + valorTaxaServico + valorCouvert - valorDesconto;
+  const valorTotal = mesa.valorTotal + valorTaxaServico + valorCouvert - valorDesconto;
 
   const handlePagamento = async () => {
     if (!formaPagamento) {
@@ -51,7 +48,6 @@ const PagamentoModal: React.FC<PagamentoModalProps> = ({ isOpen, onClose, mesa }
       toast.success('Pagamento finalizado com sucesso!');
       onClose();
     } catch (error) {
-      console.error('Error processing payment:', error);
       toast.error('Erro ao processar pagamento');
     } finally {
       setLoading(false);
@@ -89,7 +85,7 @@ const PagamentoModal: React.FC<PagamentoModalProps> = ({ isOpen, onClose, mesa }
                 Consumo
               </h3>
               <p className="text-2xl font-bold text-gray-900">
-                {formatarDinheiro(mesa.valor_total)}
+                {formatarDinheiro(mesa.valorTotal)}
               </p>
             </div>
 

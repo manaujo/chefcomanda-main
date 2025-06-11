@@ -86,12 +86,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           .maybeSingle()
       ]);
 
-      if (roleError && roleError.code !== 'PGRST116') {
-        console.error('Error loading user role:', roleError);
-      }
-      if (profileError && profileError.code !== 'PGRST116') {
-        console.error('Error loading user profile:', profileError);
-      }
+      if (roleError && roleError.code !== 'PGRST116') throw roleError;
+      if (profileError && profileError.code !== 'PGRST116') throw profileError;
 
       setState({
         user,
@@ -102,29 +98,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // Redirect based on user role
       const role = roleData?.role || 'admin';
-      const currentPath = window.location.pathname;
-      
-      // Only redirect if we're on login/signup pages
-      if (currentPath === '/login' || currentPath === '/signup') {
-        switch (role) {
-          case 'admin':
-            navigate('/');
-            break;
-          case 'kitchen':
-            navigate('/comandas');
-            break;
-          case 'waiter':
-            navigate('/mesas');
-            break;
-          case 'cashier':
-            navigate('/caixa');
-            break;
-          case 'stock':
-            navigate('/estoque');
-            break;
-          default:
-            navigate('/');
-        }
+      switch (role) {
+        case 'admin':
+          navigate('/');
+          break;
+        case 'kitchen':
+          navigate('/comandas');
+          break;
+        case 'waiter':
+          navigate('/mesas');
+          break;
+        case 'cashier':
+          navigate('/caixa');
+          break;
+        case 'stock':
+          navigate('/estoque');
+          break;
+        default:
+          navigate('/');
       }
     } catch (error) {
       console.error('Error loading user data:', error);
@@ -135,8 +126,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async ({ email, password, role, name }: SignUpData) => {
     try {
-      setState(prev => ({ ...prev, loading: true }));
-      
       const { data: { user }, error } = await supabase.auth.signUp({
         email,
         password,
@@ -148,32 +137,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       if (!user) throw new Error('Erro ao criar usuário');
 
-      // The trigger will automatically create profile and user role
-      toast.success('Conta criada com sucesso!');
-      navigate('/');
+      // Create user profile
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({ id: user.id, name });
+
+      if (profileError) throw profileError;
+
+      // Create user role record
+      const { error: roleError } = await supabase
+        .from('user_roles')
+        .insert({ user_id: user.id, role });
+
+      if (roleError) throw roleError;
+
+      // Create audit log
+      await DatabaseService.createAuditLog({
+        user_id: user.id,
+        action_type: 'create',
+        entity_type: 'user',
+        entity_id: user.id,
+        details: { name, role }
+      });
+
+      toast.success('Conta criada com sucesso! Verifique seu e-mail.');
+      navigate('/auth/verify-email');
     } catch (error) {
       console.error('Error signing up:', error);
-      if (error instanceof Error) {
-        if (error.message.includes('Failed to fetch')) {
-          toast.error('Erro de conexão. Verifique sua internet e tente novamente.');
-        } else if (error.message.includes('already registered')) {
-          toast.error('Este e-mail já está cadastrado');
-        } else {
-          toast.error(error.message);
-        }
+      if (error instanceof Error && error.message.includes('Failed to fetch')) {
+        toast.error('Erro de conexão. Verifique sua internet e tente novamente.');
       } else {
         toast.error('Erro ao criar conta');
       }
       throw error;
-    } finally {
-      setState(prev => ({ ...prev, loading: false }));
     }
   };
 
   const signIn = async (email: string, password: string) => {
     try {
-      setState(prev => ({ ...prev, loading: true }));
-      
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -184,20 +185,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       toast.success('Login realizado com sucesso!');
     } catch (error) {
       console.error('Error signing in:', error);
-      if (error instanceof Error) {
-        if (error.message.includes('Failed to fetch')) {
-          toast.error('Erro de conexão. Verifique sua internet e tente novamente.');
-        } else if (error.message.includes('Invalid login credentials')) {
-          toast.error('E-mail ou senha incorretos');
-        } else {
-          toast.error(error.message);
-        }
+      if (error instanceof Error && error.message.includes('Failed to fetch')) {
+        toast.error('Erro de conexão. Verifique sua internet e tente novamente.');
+      } else if (error instanceof Error && error.message.includes('Invalid login credentials')) {
+        toast.error('E-mail ou senha incorretos');
       } else {
         toast.error('Erro ao fazer login');
       }
       throw error;
-    } finally {
-      setState(prev => ({ ...prev, loading: false }));
     }
   };
 
@@ -225,8 +220,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!state.user) {
         throw new Error('Usuário não autenticado');
       }
-
-      setState(prev => ({ ...prev, loading: true }));
 
       // Update auth user metadata
       if (data.name) {
@@ -273,8 +266,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         toast.error('Erro ao atualizar perfil');
       }
       throw error;
-    } finally {
-      setState(prev => ({ ...prev, loading: false }));
     }
   };
 

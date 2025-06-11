@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   BarChart4, TrendingUp, Users, ShoppingCart, AlertTriangle,
   Sun, Moon, CreditCard, Clock, Coffee, ChevronRight,
@@ -10,51 +10,28 @@ import { useTheme } from '../contexts/ThemeContext';
 import { formatarDinheiro } from '../utils/formatters';
 import Button from '../components/ui/Button';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { DatabaseService } from '../services/database';
+import { dadosPedidos, dadosAlertasEstoque } from '../data/mockData';
 
 const Dashboard: React.FC = () => {
-  const { mesas, produtos, comandas, loading } = useRestaurante();
+  const { mesas, produtosPopulares } = useRestaurante();
   const { displayName } = useAuth();
   const { theme } = useTheme();
-  const [dashboardStats, setDashboardStats] = useState<any>(null);
-  const [statsLoading, setStatsLoading] = useState(true);
+  const [periodoSelecionado] = useState('7dias');
   
-  useEffect(() => {
-    loadDashboardStats();
-  }, []);
-
-  const loadDashboardStats = async () => {
-    try {
-      setStatsLoading(true);
-      // For now, we'll calculate stats from the loaded data
-      // Later we can use the dashboard_stats view
-      const stats = {
-        vendas_hoje: 3241.40,
-        vendas_mes: 45890.75,
-        total_mesas: mesas?.length || 0,
-        mesas_ocupadas: mesas?.filter(m => m.status === 'ocupada').length || 0,
-        mesas_livres: mesas?.filter(m => m.status === 'livre').length || 0,
-        total_produtos: produtos?.length || 0,
-        comandas_abertas: comandas?.filter(c => c.status === 'aberta').length || 0
-      };
-      setDashboardStats(stats);
-    } catch (error) {
-      console.error('Error loading dashboard stats:', error);
-    } finally {
-      setStatsLoading(false);
-    }
-  };
-
-  // Safe data access with fallbacks
-  const mesasOcupadas = mesas?.filter(mesa => mesa.status === 'ocupada') || [];
-  const mesasAguardandoPagamento = mesas?.filter(mesa => mesa.status === 'aguardando') || [];
-  const comandasAbertas = comandas?.filter(c => c.status === 'aberta') || [];
+  // Use mock data for pedidos and alertasEstoque
+  const pedidos = dadosPedidos;
+  const alertasEstoque = dadosAlertasEstoque;
+  
+  const mesasOcupadas = mesas.filter(mesa => mesa.status === 'ocupada');
+  const mesasAguardandoPagamento = mesas.filter(mesa => mesa.status === 'aguardando');
+  const pedidosPendentes = pedidos.filter(pedido => pedido.status === 'pendente');
   
   // Métricas calculadas
-  const vendasHoje = dashboardStats?.vendas_hoje || 0;
-  const vendasMes = dashboardStats?.vendas_mes || 0;
+  const vendasHoje = 3241.40;
+  const vendasMes = 45890.75;
   const tempoMedioAtendimento = 28; // minutos
-  const clientesAtivos = mesasOcupadas.length * 2; // Estimativa
+  const clientesAtivos = 48;
+  const comandasAbertas = mesasOcupadas.length;
   const comandasFechadas = 125;
 
   // Dados para gráficos
@@ -75,26 +52,12 @@ const Dashboard: React.FC = () => {
     { nome: 'Refrigerante', quantidade: 85 }
   ];
 
-  const alertasEstoque = [
-    { id: 1, produto: 'Picanha', quantidade: 5 },
-    { id: 2, produto: 'Arroz', quantidade: 15 },
-    { id: 3, produto: 'Coca-Cola', quantidade: 24 }
-  ];
-
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Bom dia';
     if (hour < 18) return 'Boa tarde';
     return 'Boa noite';
   };
-
-  if (loading || statsLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
@@ -249,7 +212,7 @@ const Dashboard: React.FC = () => {
             <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
               <p className="text-sm text-gray-500 dark:text-gray-400">Abertas</p>
               <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {comandasAbertas.length}
+                {comandasAbertas}
               </p>
             </div>
             <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
