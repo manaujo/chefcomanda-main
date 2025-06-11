@@ -1,11 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
-  User, Settings, Building2, Users, LogOut,
-  ChevronDown, Moon, Sun, CreditCard
-} from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useTheme } from '../../contexts/ThemeContext';
+  User,
+  Settings,
+  Building2,
+  Users,
+  LogOut,
+  ChevronDown,
+  Moon,
+  Sun,
+  CreditCard
+} from "lucide-react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const ProfileDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,12 +22,15 @@ const ProfileDropdown: React.FC = () => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -34,7 +44,7 @@ const ProfileDropdown: React.FC = () => {
         </div>
         <div className="hidden md:block text-left">
           <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            {displayName || 'Usuário'}
+            {displayName || "Usuário"}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
             {userRole}
@@ -45,10 +55,10 @@ const ProfileDropdown: React.FC = () => {
 
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-50">
-          {userRole === 'admin' && (
+          {userRole === "admin" && (
             <>
               <Link
-                to="/profile/company"
+                to="/dashboard/profile/company"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => setIsOpen(false)}
               >
@@ -56,7 +66,7 @@ const ProfileDropdown: React.FC = () => {
                 Dados da Empresa
               </Link>
               <Link
-                to="/profile/employees"
+                to="/dashboard/profile/employees"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => setIsOpen(false)}
               >
@@ -67,15 +77,25 @@ const ProfileDropdown: React.FC = () => {
           )}
 
           <Link
-            to="/profile/settings"
+            to="/dashboard/profile/user"
+            className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => setIsOpen(false)}
+          >
+            <User size={16} className="mr-3" />
+            Perfil do Usuário
+          </Link>
+
+          <Link
+            to="/dashboard/profile/settings"
             className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             onClick={() => setIsOpen(false)}
           >
             <Settings size={16} className="mr-3" />
             Configurações
           </Link>
+
           <Link
-            to="/profile/planos"
+            to="/dashboard/profile/planos"
             className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             onClick={() => setIsOpen(false)}
           >
@@ -87,12 +107,12 @@ const ProfileDropdown: React.FC = () => {
             onClick={toggleTheme}
             className="w-full flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
           >
-            {theme === 'dark' ? (
+            {theme === "dark" ? (
               <Sun size={16} className="mr-3" />
             ) : (
               <Moon size={16} className="mr-3" />
             )}
-            {theme === 'dark' ? 'Tema Claro' : 'Tema Escuro'}
+            {theme === "dark" ? "Tema Claro" : "Tema Escuro"}
           </button>
 
           <hr className="my-1 border-gray-200 dark:border-gray-700" />
