@@ -22,6 +22,9 @@ import {
   Mail,
   MapPin
 } from "lucide-react";
+import Img from "../assets/relatorios.jpeg";
+import Img1 from "../assets/cmv.jpeg";
+import Img2 from "../assets/dashboard.jpeg";
 import Button from "../components/ui/Button";
 
 const LandingPage: React.FC = () => {
@@ -245,7 +248,7 @@ const LandingPage: React.FC = () => {
             <div className="relative">
               <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg"
+                  src={Img2}
                   alt="Dashboard do ChefComanda"
                   className="w-full h-64 object-cover"
                 />
@@ -322,23 +325,22 @@ const LandingPage: React.FC = () => {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <img
-                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg"
+                src={Img1}
                 alt="Gestão de Mesas"
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Gestão de Mesas em Tempo Real
+                  CMV em Tempo Real
                 </h3>
                 <p className="text-gray-600">
-                  Visualize o status de todas as mesas, tempo de ocupação e
-                  valor das comandas.
+                  Análise e controle dos custos dos produtos vendidos
                 </p>
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <img
-                src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg"
+                src={Img}
                 alt="Relatórios Avançados"
                 className="w-full h-48 object-cover"
               />
@@ -553,7 +555,7 @@ const LandingPage: React.FC = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-gray-100 w-full sm:w-auto"
+                className=" text-blue-600 bg-gray-100 w-full sm:w-auto"
                 icon={<ArrowRight size={20} />}
               >
                 Começar Teste Grátis de 7 Dias
@@ -644,15 +646,15 @@ const LandingPage: React.FC = () => {
               <div className="space-y-3 text-gray-400">
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 mr-3" />
-                  <span>(11) 9999-9999</span>
+                  <span>(62) 9999-9999</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-5 h-5 mr-3" />
-                  <span>contato@chefcomanda.com</span>
+                  <span>chefcomandaoficial@gmail.com</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 mr-3" />
-                  <span>São Paulo, SP</span>
+                  <span>Goiania, Go</span>
                 </div>
               </div>
             </div>
