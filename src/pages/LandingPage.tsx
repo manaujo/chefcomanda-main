@@ -149,7 +149,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <ChefHat className="h-8 w-8 text-blue-600" />
+              <ChefHat className="h-8 w-8 text-[#B13336]" />
               <span className="text-xl font-bold text-gray-900">
                 ChefComanda
               </span>
@@ -157,25 +157,25 @@ const LandingPage: React.FC = () => {
             <nav className="hidden md:flex space-x-8">
               <a
                 href="#funcionalidades"
-                className="text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-gray-600 hover:text-[#B13336] transition-colors"
               >
                 Funcionalidades
               </a>
               <a
                 href="#precos"
-                className="text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-gray-600 hover:text-[#B13336] transition-colors"
               >
                 Preços
               </a>
               <a
                 href="#depoimentos"
-                className="text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-gray-600 hover:text-[#B13336] transition-colors"
               >
                 Depoimentos
               </a>
               <a
                 href="#contato"
-                className="text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-gray-600 hover:text-[#B13336] transition-colors"
               >
                 Contato
               </a>
@@ -183,7 +183,7 @@ const LandingPage: React.FC = () => {
             <Link to="/login">
               <Button
                 variant="primary"
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-[#B13336] hover:bg-[#9A2B2E] text-white border-none shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Fazer Login
               </Button>
@@ -193,13 +193,13 @@ const LandingPage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
+      <section className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                 Transforme seu restaurante com o
-                <span className="text-blue-600"> ChefComanda</span>
+                <span className="text-[#B13336]"> ChefComanda</span>
               </h1>
               <p className="text-xl text-gray-600 mt-6 leading-relaxed">
                 Sistema completo de gestão para restaurantes. Controle mesas,
@@ -211,7 +211,7 @@ const LandingPage: React.FC = () => {
                   <Button
                     variant="primary"
                     size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+                    className="bg-[#B13336] hover:bg-[#9A2B2E] text-white border-none shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
                     icon={<ArrowRight size={20} />}
                   >
                     Começar Teste Grátis
@@ -220,7 +220,7 @@ const LandingPage: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto border-2 border-[#B13336] text-[#B13336] hover:bg-[#B13336] hover:text-white transition-all duration-300"
                   onClick={() =>
                     document
                       .getElementById("funcionalidades")
@@ -232,15 +232,15 @@ const LandingPage: React.FC = () => {
               </div>
               <div className="mt-8 flex items-center space-x-6 text-sm text-gray-600">
                 <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  <Check className="w-5 h-5 text-[#B13336] mr-2" />
                   Teste grátis de 7 dias
                 </div>
                 <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  <Check className="w-5 h-5 text-[#B13336] mr-2" />
                   Sem taxa de instalação
                 </div>
                 <div className="flex items-center">
-                  <Check className="w-5 h-5 text-green-500 mr-2" />
+                  <Check className="w-5 h-5 text-[#B13336] mr-2" />
                   Suporte especializado
                 </div>
               </div>
@@ -272,21 +272,21 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">500+</div>
+              <div className="text-3xl font-bold text-[#B13336]">500+</div>
               <div className="text-gray-600 mt-2">Restaurantes Ativos</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">1M+</div>
+              <div className="text-3xl font-bold text-[#B13336]">1M+</div>
               <div className="text-gray-600 mt-2">Pedidos Processados</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">40%</div>
+              <div className="text-3xl font-bold text-[#B13336]">40%</div>
               <div className="text-gray-600 mt-2">
                 Redução no Tempo de Atendimento
               </div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">25%</div>
+              <div className="text-3xl font-bold text-[#B13336]">25%</div>
               <div className="text-gray-600 mt-2">Aumento Médio na Receita</div>
             </div>
           </div>
@@ -294,7 +294,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section id="funcionalidades" className="py-20 bg-gray-50">
+      <section
+        id="funcionalidades"
+        className="py-20 bg-gradient-to-br from-gray-50 to-red-50"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -310,9 +313,9 @@ const LandingPage: React.FC = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white rounded-lg p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-[#B13336]/20"
               >
-                <div className="text-blue-600 mb-4">{feature.icon}</div>
+                <div className="text-[#B13336] mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {feature.title}
                 </h3>
@@ -323,7 +326,7 @@ const LandingPage: React.FC = () => {
 
           {/* Screenshots Grid */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100">
               <img
                 src={Img1}
                 alt="Gestão de Mesas"
@@ -338,7 +341,7 @@ const LandingPage: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100">
               <img
                 src={Img}
                 alt="Relatórios Avançados"
@@ -369,7 +372,7 @@ const LandingPage: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <Zap className="w-6 h-6 text-blue-600 mt-1" />
+                    <Zap className="w-6 h-6 text-[#B13336] mt-1" />
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -383,7 +386,7 @@ const LandingPage: React.FC = () => {
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <TrendingUp className="w-6 h-6 text-blue-600 mt-1" />
+                    <TrendingUp className="w-6 h-6 text-[#B13336] mt-1" />
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -397,7 +400,7 @@ const LandingPage: React.FC = () => {
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <Shield className="w-6 h-6 text-blue-600 mt-1" />
+                    <Shield className="w-6 h-6 text-[#B13336] mt-1" />
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -411,7 +414,7 @@ const LandingPage: React.FC = () => {
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <Clock className="w-6 h-6 text-blue-600 mt-1" />
+                    <Clock className="w-6 h-6 text-[#B13336] mt-1" />
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -437,7 +440,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Pricing Section */}
-      <section id="precos" className="py-20 bg-gray-50">
+      <section
+        id="precos"
+        className="py-20 bg-gradient-to-br from-gray-50 to-red-50"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -452,12 +458,14 @@ const LandingPage: React.FC = () => {
             {plans.map((plan, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-lg shadow-lg overflow-hidden ${
-                  plan.popular ? "ring-2 ring-blue-500 transform scale-105" : ""
+                className={`bg-white rounded-lg shadow-lg overflow-hidden border ${
+                  plan.popular
+                    ? "ring-2 ring-[#B13336] transform scale-105 border-[#B13336]"
+                    : "border-gray-200"
                 }`}
               >
                 {plan.popular && (
-                  <div className="bg-blue-500 text-white text-center py-2 text-sm font-medium">
+                  <div className="bg-[#B13336] text-white text-center py-2 text-sm font-medium">
                     Mais Popular
                   </div>
                 )}
@@ -475,7 +483,7 @@ const LandingPage: React.FC = () => {
                   <ul className="mt-6 space-y-3">
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
-                        <Check className="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" />
+                        <Check className="w-5 h-5 text-[#B13336] mt-0.5 mr-3 flex-shrink-0" />
                         <span className="text-gray-600 text-sm">{feature}</span>
                       </li>
                     ))}
@@ -486,7 +494,9 @@ const LandingPage: React.FC = () => {
                         variant={plan.popular ? "primary" : "secondary"}
                         fullWidth
                         className={
-                          plan.popular ? "bg-blue-600 hover:bg-blue-700" : ""
+                          plan.popular
+                            ? "bg-[#B13336] hover:bg-[#9A2B2E] text-white border-none shadow-lg hover:shadow-xl transition-all duration-300"
+                            : "border-2 border-[#B13336] text-[#B13336] hover:bg-[#B13336] hover:text-white transition-all duration-300"
                         }
                       >
                         Começar Teste Grátis
@@ -514,12 +524,15 @@ const LandingPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-6">
+              <div
+                key={index}
+                className="bg-gradient-to-br from-red-50 to-orange-50 rounded-lg p-6 border border-red-100"
+              >
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-5 h-5 text-yellow-400 fill-current"
+                      className="w-5 h-5 text-[#B13336] fill-current"
                     />
                   ))}
                 </div>
@@ -541,12 +554,12 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600">
+      <section className="py-20 bg-gradient-to-r from-[#B13336] to-[#9A2B2E]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Pronto para transformar seu restaurante?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
             Junte-se a centenas de restaurantes que já aumentaram suas vendas
             com o ChefComanda
           </p>
@@ -555,7 +568,7 @@ const LandingPage: React.FC = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className=" text-blue-600 bg-gray-100 w-full sm:w-auto"
+                className="bg-white text-[#B13336] hover:bg-gray-100 border-none shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
                 icon={<ArrowRight size={20} />}
               >
                 Começar Teste Grátis de 7 Dias
@@ -564,7 +577,7 @@ const LandingPage: React.FC = () => {
             <Button
               variant="ghost"
               size="lg"
-              className="text-white border-white hover:bg-blue-700 w-full sm:w-auto"
+              className="text-white border-2 border-white hover:bg-white hover:text-[#B13336] transition-all duration-300 w-full sm:w-auto"
             >
               Falar com Especialista
             </Button>
@@ -578,7 +591,7 @@ const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <ChefHat className="h-8 w-8 text-blue-400" />
+                <ChefHat className="h-8 w-8 text-[#B13336]" />
                 <span className="text-xl font-bold">ChefComanda</span>
               </div>
               <p className="text-gray-400">
