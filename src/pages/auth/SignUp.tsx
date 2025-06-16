@@ -10,13 +10,14 @@ const SignUp: React.FC = () => {
     email: '',
     cpf: '',
     senha: '',
-    confirmaSenha: ''
+    confirmaSenha: '',
+    restaurantName: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
@@ -37,12 +38,12 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     if (!formData.nome || !formData.email || !formData.cpf || !formData.senha || !formData.confirmaSenha) {
       setError('Preencha todos os campos');
       return;
     }
-    
+
     if (!validateEmail(formData.email)) {
       setError('Digite um e-mail válido');
       return;
@@ -52,24 +53,25 @@ const SignUp: React.FC = () => {
       setError('Digite um CPF válido (000.000.000-00)');
       return;
     }
-    
+
     if (!validatePassword(formData.senha)) {
       setError('A senha deve ter no mínimo 6 caracteres');
       return;
     }
-    
+
     if (formData.senha !== formData.confirmaSenha) {
       setError('As senhas não conferem');
       return;
     }
-    
+
     try {
       setLoading(true);
       await signUp({
         email: formData.email,
         password: formData.senha,
         name: formData.nome,
-        role: 'admin'
+        restaurantName: formData.restaurantName,
+        role: 'admin',
       });
       navigate('/auth/verify-email');
     } catch (err) {
@@ -88,7 +90,7 @@ const SignUp: React.FC = () => {
             <p className="text-sm text-red-700 dark:text-red-200">{error}</p>
           </div>
         )}
-        
+
         <div>
           <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Nome Completo
@@ -104,6 +106,25 @@ const SignUp: React.FC = () => {
               onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
               className="pl-10 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 transition-colors dark:text-white"
               placeholder="Seu nome completo"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="restaurantName" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Nome da Empresa
+          </label>
+          <div className="mt-1 relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <User size={16} className="text-gray-400 dark:text-gray-600" />
+            </div>
+            <input
+              id="restaurantName"
+              type="text"
+              value={formData.restaurantName}
+              onChange={(e) => setFormData({ ...formData, restaurantName: e.target.value })}
+              className="pl-10 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 transition-colors dark:text-white"
+              placeholder="Escreva um nome da empresa"
             />
           </div>
         </div>
